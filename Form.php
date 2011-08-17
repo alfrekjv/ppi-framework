@@ -9,6 +9,13 @@
  */
 class PPI_Form {
 
+	/**
+	 * The bind data for the form.
+	 *
+	 * @var array
+	 */
+	protected $_bindData = array();
+
 	function __construct() {}
 
 	/**
@@ -196,11 +203,8 @@ class PPI_Form {
 					$selected = $options['selected'];
 					unset($options['selected']);
 				}
-/*
-				if(isset($options['multiSelect'])) {
 
-				}
-*/
+				// @todo revise this, it needs refactored as we have bind data now.
 				$field = new PPI_Form_Tag_Select($options);
 				if(isset($values)) {
 					$field->setValues($values);
@@ -215,30 +219,22 @@ class PPI_Form {
 				throw new PPI_Exception('Invalid Field Type: ' . $fieldType);
 		}
 
+		// If we have bind data against the current element. Lets apply it.
+		if(isset($options['name']) && !empty($this->_bindData) && isset($this->_bindData[$options['name']])) {
+			$field->setValue($this->_bindData[$options['name']]);
+		}
+
 		return $field->render();
 	}
 
 	/**
-	 * Method to bind data from an entity to a form element
+	 * Apply some bind data to this form.
 	 *
 	 * @param array $data
 	 * @return void
 	 */
-	function bindArray(array $data) {
-		foreach($data as $fieldName => $value) {
-			// .. tbc
-		}
-	}
-
-	/**
-	 * Bind data for a particular field
-	 *
-	 * @param string $fieldName
-	 * @param mixed $value
-	 * @return void
-	 */
-	function bindField($fieldName, $value) {
-		$this->bindArray(array($fieldName => $value));
+	function bind(array $data) {
+		$this->_bindData = $data;
 	}
 
 	function end() {
