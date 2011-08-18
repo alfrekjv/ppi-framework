@@ -10,12 +10,12 @@ class PPI_Test_RadioboxTagTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testCreate() {
-		$output = $this->_form->radio('myradio');
+		$output = $this->_form->radio('myradio')->render();
 		$this->assertEquals($output, '<input type="radio" name="myradio">');
 	}
 
 	function testCreateWithAttrs() {
-		$output = $this->_form->radio('myradio', array('id' => 'bar'));
+		$output = $this->_form->radio('myradio', array('id' => 'bar'))->render();
 		$this->assertEquals($output, '<input type="radio" name="myradio" id="bar">');
 	}
 

@@ -10,12 +10,12 @@ class PPI_Test_TextTagTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testCreate() {
-		$output = $this->_form->text('username');
+		$output = $this->_form->text('username')->render();
 		$this->assertEquals($output, '<input type="text" name="username">');
 	}
 
 	function testCreateWithAttrs() {
-		$output = $this->_form->text('username', array('id' => 'bar'));
+		$output = $this->_form->text('username', array('id' => 'bar'))->render();
 		$this->assertEquals($output, '<input type="text" name="username" id="bar">');
 	}
 

@@ -10,12 +10,12 @@ class PPI_Form_HiddenTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testCreate() {
-		$output = $this->_form->hidden('hiddenName', array('value' => 'hiddenValue'));
+		$output = $this->_form->hidden('hiddenName', array('value' => 'hiddenValue'))->render();
 		$this->assertEquals($output, '<input type="hidden" name="hiddenName" value="hiddenValue">');
 	}
 
 	function testCreateWithAttrs() {
-		$output = $this->_form->hidden('hiddenName', array('value' => 'hiddenValue', 'id' => 'bar'));
+		$output = $this->_form->hidden('hiddenName', array('value' => 'hiddenValue', 'id' => 'bar'))->render();
 		$this->assertEquals($output, '<input type="hidden" name="hiddenName" value="hiddenValue" id="bar">');
 	}
 

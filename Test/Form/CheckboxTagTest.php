@@ -10,12 +10,12 @@ class PPI_Test_CheckboxTagTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testCreate() {
-		$output = $this->_form->checkbox('mycheck');
+		$output = $this->_form->checkbox('mycheck')->render();
 		$this->assertEquals($output, '<input type="checkbox" name="mycheck">');
 	}
 
 	function testCreateWithAttrs() {
-		$output = $this->_form->checkbox('mycheck', array('id' => 'bar'));
+		$output = $this->_form->checkbox('mycheck', array('id' => 'bar'))->render();
 		$this->assertEquals($output, '<input type="checkbox" name="mycheck" id="bar">');
 	}
 

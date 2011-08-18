@@ -13,18 +13,18 @@ class PPI_Test_MaxLengthRuleTest extends PHPUnit_Framework_TestCase {
      * @dataProvider providerForValidationTrue
      */
 	function testValidatesTrue($size, $data) {
-        $this->_rule->setParam($size);
+        $this->_rule->setRuleData($size);
         $this->assertTrue($this->_rule->validate($data));
     }
-    
+
     /**
      * @dataProvider providerForValidationFalse
      */
 	function testValidatesFalse($size, $data) {
-        $this->_rule->setParam($size);
+        $this->_rule->setRuleData($size);
         $this->assertFalse($this->_rule->validate($data));
     }
-    
+
     function providerForValidationTrue() {
         return array(
             array(10, '0123456789'),
@@ -33,11 +33,11 @@ class PPI_Test_MaxLengthRuleTest extends PHPUnit_Framework_TestCase {
             array(10, ''),
         );
     }
-    
+
     function providerForValidationFalse() {
         return array(
             array(10, '0123456789012'),
-            array(10, '  0123456789012  '), 
+            array(10, '  0123456789012  '),
         );
     }
 }

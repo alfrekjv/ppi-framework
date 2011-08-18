@@ -10,12 +10,12 @@ class PPI_Test_PasswordTagTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testCreate() {
-		$output = $this->_form->password('mypass');
+		$output = $this->_form->password('mypass')->render();
 		$this->assertEquals($output, '<input type="password" name="mypass">');
 	}
 
 	function testCreateWithAttrs() {
-		$output = $this->_form->password('mypass', array('id' => 'bar'));
+		$output = $this->_form->password('mypass', array('id' => 'bar'))->render();
 		$this->assertEquals($output, '<input type="password" name="mypass" id="bar">');
 	}
 

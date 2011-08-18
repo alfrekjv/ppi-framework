@@ -10,12 +10,12 @@ class PPI_Test_TextareaTagTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testCreate() {
-		$output = $this->_form->textarea('desc');
+		$output = $this->_form->textarea('desc')->render();
 		$this->assertEquals($output, '<textarea name="desc"></textarea>');
 	}
 
 	function testCreateWithAttrs() {
-		$output = $this->_form->textarea('desc', array('id' => 'bar'));
+		$output = $this->_form->textarea('desc', array('id' => 'bar'))->render();
 		$this->assertEquals($output, '<textarea name="desc" id="bar"></textarea>');
 	}
 

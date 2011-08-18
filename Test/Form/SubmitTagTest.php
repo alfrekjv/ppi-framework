@@ -10,12 +10,12 @@ class PPI_Form_SubmitTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testCreate() {
-		$output = $this->_form->submit('Register');
+		$output = $this->_form->submit('Register')->render();
 		$this->assertEquals($output, '<input type="submit" value="Register">');
 	}
 
 	function testCreateWithAttrs() {
-		$output = $this->_form->submit('Register', array('name' => 'foo', 'id' => 'bar'));
+		$output = $this->_form->submit('Register', array('name' => 'foo', 'id' => 'bar'))->render();
 		$this->assertEquals($output, '<input type="submit" value="Register" name="foo" id="bar">');
 	}
 
