@@ -1,0 +1,43 @@
+<?php
+class PPI_Test_MaxLengthRuleTest extends PHPUnit_Framework_TestCase {
+
+	function setUp() {
+		$this->_rule = new PPI_Form_Rule_Maxlength();
+	}
+
+	function tearDown() {
+		unset($this->_rule);
+	}
+
+    /**
+     * @dataProvider providerForValidationTrue
+     */
+	function testValidatesTrue($size, $data) {
+        $this->_rule->setParam($size);
+        $this->assertTrue($this->_rule->validate($data));
+    }
+    
+    /**
+     * @dataProvider providerForValidationFalse
+     */
+	function testValidatesFalse($size, $data) {
+        $this->_rule->setParam($size);
+        $this->assertFalse($this->_rule->validate($data));
+    }
+    
+    function providerForValidationTrue() {
+        return array(
+            array(10, '0123456789'),
+            array(10, '   0123456789   '),//whitespace is ignored
+            array(10, '0'),
+            array(10, ''),
+        );
+    }
+    
+    function providerForValidationFalse() {
+        return array(
+            array(10, '0123456789012'),
+            array(10, '  0123456789012  '), 
+        );
+    }
+}
