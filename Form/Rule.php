@@ -8,9 +8,11 @@
 abstract class PPI_Form_Rule {
 
 	/**
+	 * The abritary param
+	 *
 	 * @var array
 	 */
-	protected $_param = null;
+	protected $_ruleData = null;
 
     /**
      * Validates data by this rule
@@ -21,11 +23,15 @@ abstract class PPI_Form_Rule {
     abstract public function validate($data);
 
     /**
+     * The Constructor
      *
      * @param mixed $param
      */
-    public function __construct($param=null) {
-        $this->setParam($param);
+    public function __construct($ruleData = null) {
+
+		if($ruleData !== null) {
+	        $this->setParam($ruleData);
+		}
     }
 
     /**
@@ -33,18 +39,18 @@ abstract class PPI_Form_Rule {
      *
      * @return string
      */
-    public function getParam() {
-        return $this->_param;
+    public function getRuleData() {
+        return $this->_ruleData;
     }
 
     /**
-     * Sets the rule param
+     * Sets the rules value
      *
      * @param mixed $value
      * @return void
      */
-    public function setParam($value) {
-        $this->_param = $value;
+    public function setRuleData($value) {
+        $this->_ruleData = $value;
     }
 
 }

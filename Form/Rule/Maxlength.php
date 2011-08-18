@@ -15,7 +15,7 @@ class PPI_Form_Rule_Maxlength  extends PPI_Form_Rule {
 	 * @return bool
 	 */
     public function validate($data) {
-        return strlen(trim($data)) <= $this->getParam();
+        return strlen(trim($data)) <= $this->getRuleData();
     }
 
 }

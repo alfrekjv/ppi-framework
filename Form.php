@@ -224,7 +224,7 @@ class PPI_Form {
 			$field->setValue($this->_bindData[$options['name']]);
 		}
 
-		return $field->render();
+		return $field;
 	}
 
 	/**

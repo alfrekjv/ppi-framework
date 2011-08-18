@@ -105,6 +105,7 @@ abstract class PPI_Form_Tag {
 	 * @return void
 	 */
 	public function setRule($ruleType, $ruleValue = '') {
+		$ruleClass = 'PPI_Form_Rule_' . ucfirst($ruleType);
 		$this->_rules[$ruleType] = array('type' => $ruleType, 'value' => $ruleValue);
 	}
 
