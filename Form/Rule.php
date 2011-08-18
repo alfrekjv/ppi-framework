@@ -14,6 +14,13 @@ abstract class PPI_Form_Rule {
 	 */
 	protected $_ruleData = null;
 
+	/**
+	 * The message for this rule
+	 *
+	 * @var null
+	 */
+	protected $_ruleMessage = null;
+
     /**
      * Validates data by this rule
      *
@@ -52,5 +59,24 @@ abstract class PPI_Form_Rule {
     public function setRuleData($value) {
         $this->_ruleData = $value;
     }
+
+	/**
+	 * Set the rule message
+	 *
+	 * @param string $message
+	 * @return void
+	 */
+	public function setRuleMessage($message) {
+		$this->_ruleMessage = $message;
+	}
+
+	/**
+	 * Get the rule message
+	 *
+	 * @return string|null
+	 */
+	public function getRuleMessage() {
+		return $this->_ruleMessage;
+	}
 
 }

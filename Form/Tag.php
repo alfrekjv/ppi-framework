@@ -100,13 +100,20 @@ abstract class PPI_Form_Tag {
 	/**
 	 * Set a rule on this field
 	 *
-	 * @param string $ruleType
-	 * @param string $ruleValue
-	 * @return void
+	 * @param string $ruleMessage The Message for this rule
+	 * @param string $ruleType The rule type
+	 * @param string $ruleValue The rule value (optional)
+	 * @return $this
 	 */
-	public function setRule($ruleType, $ruleValue = '') {
-		$ruleClass = 'PPI_Form_Rule_' . ucfirst($ruleType);
-		$this->_rules[$ruleType] = array('type' => $ruleType, 'value' => $ruleValue);
+	public function setRule($ruleMessage, $ruleType, $ruleValue = null) {
+		$className = 'PPI_Form_Rule_' . ucfirst($ruleType);
+		$ruleClass = new $className();
+		$ruleClass->setRuleMessage($ruleMessage);
+		if($ruleValue !== null) {
+			$ruleClass->setRuleData($ruleValue);
+		}
+		$this->_rules[$ruleType] = $ruleClass;
+		return $this;
 	}
 
 	/**
@@ -115,7 +122,7 @@ abstract class PPI_Form_Tag {
 	 * @return array
 	 */
 	public function getRule($ruleType) {
-		return isset($this->_rules[$ruleType]) ? $this->_rules[$ruleType] : array();
+		return isset($this->_rules[$ruleType]) ? $this->_rules[$ruleType] : null;
 	}
 
 
