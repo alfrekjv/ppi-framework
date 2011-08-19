@@ -125,5 +125,49 @@ abstract class PPI_Form_Tag {
 		return isset($this->_rules[$ruleType]) ? $this->_rules[$ruleType] : null;
 	}
 
+	/**
+	 * Iterate over all the set rules on this field and validate them
+	 * Upon failed validation we set the error message and return false
+	 *
+	 * @return bool
+	 */
+	public function validate() {
+		foreach($this->_rules as $rule) {
+			if($rule->validate($this->getValue()) === false) {
+				$this->setErrorMessage($rule->getRuleMessage());
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Set the error message upon failed validation
+	 *
+	 * @param string $message
+	 * @return void
+	 */
+	public function setErrorMessage($message) {
+		$this->_errorMessage = $message;
+	}
+
+	/**
+	 * Get the error message set by a failed validation rule
+	 *
+	 * @return string|null
+	 */
+	public function getErrorMessage() {
+		return $this->_errorMessage;
+	}
+
+	/**
+	 * Check if a validation has failed or not.
+	 *
+	 * @return bool
+	 */
+	public function hasErrored() {
+		return $this->_errorMessage !== null;
+	}
+
 
 }
