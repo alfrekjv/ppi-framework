@@ -82,7 +82,7 @@ class PPI_Form_SubmitTest extends PHPUnit_Framework_TestCase {
 		$submit->setValue('submitvalue');
 		$this->assertEquals('submitvalue', $submit->getValue());
 	}
-
+/*
 	function testGetSetRule() {
 
 		$field = new PPI_Form_Tag_Submit();
@@ -95,5 +95,5 @@ class PPI_Form_SubmitTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($rule['value'], 32);
 		$this->assertEquals($rule['type'], 'maxlength');
 	}
-
+*/
 }

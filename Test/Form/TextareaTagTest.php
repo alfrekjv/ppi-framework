@@ -78,7 +78,7 @@ class PPI_Test_TextareaTagTest extends PHPUnit_Framework_TestCase {
 		$text->setValue('my description');
 		$this->assertEquals('my description', $text->getValue());
 	}
-
+/*
 	function testGetSetRule() {
 
 		$field = new PPI_Form_Tag_Textarea();
@@ -91,5 +91,5 @@ class PPI_Test_TextareaTagTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($rule['value'], 32);
 		$this->assertEquals($rule['type'], 'maxlength');
 	}
-
+*/
 }

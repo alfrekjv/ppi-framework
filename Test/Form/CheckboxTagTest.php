@@ -79,7 +79,7 @@ class PPI_Test_CheckboxTagTest extends PHPUnit_Framework_TestCase {
 		$checkbox->setValue('foo_check');
 		$this->assertEquals('foo_check', $checkbox->getValue());
 	}
-
+/*
 	function testGetSetRule() {
 
 		$field = new PPI_Form_Tag_Checkbox();
@@ -92,5 +92,5 @@ class PPI_Test_CheckboxTagTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($rule['value'], 32);
 		$this->assertEquals($rule['type'], 'maxlength');
 	}
-
+*/
 }

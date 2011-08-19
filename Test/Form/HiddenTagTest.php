@@ -82,7 +82,7 @@ class PPI_Form_HiddenTest extends PHPUnit_Framework_TestCase {
 		$hidden->setValue('hiddenvalue');
 		$this->assertEquals('hiddenvalue', $hidden->getValue());
 	}
-
+/*
 	function testGetSetRule() {
 
 		$field = new PPI_Form_Tag_Hidden();
@@ -95,5 +95,5 @@ class PPI_Form_HiddenTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($rule['value'], 32);
 		$this->assertEquals($rule['type'], 'maxlength');
 	}
-
+*/
 }
