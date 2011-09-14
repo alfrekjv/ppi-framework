@@ -194,7 +194,8 @@ class PPI_View {
 		$nativeAjax        = isset($params['core']['is']['ajax']) && $params['core']['is']['ajax'];
 		$overrideAjax      = isset($params['isAjax']) && $params['isAjax'];
 		$fullLayoutDisable = isset($options['fullLayout']) && $options['fullLayout'] === false;
-		if($nativeAjax || $overrideAjax || $fullLayoutDisable) {
+		$partialLayout     = isset($options['partial']) && $options['partial'] === true;
+		if($nativeAjax || $overrideAjax || $fullLayoutDisable || $partialLayout) {
 			$template = $p_tplFile;
 		} else {
 			// Master template
