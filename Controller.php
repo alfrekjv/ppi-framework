@@ -304,6 +304,15 @@ class PPI_Controller {
 	}
 
 	/**
+	 * Get a new PPI_Form object
+	 *
+	 * @return PPI_Form
+	 */
+	protected function getForm() {
+		return new PPI_Form();
+	}
+
+	/**
 	 * Checks if the current user is logged in
      *
 	 * @return boolean
@@ -322,6 +331,16 @@ class PPI_Controller {
 	protected function getAuthData($p_bUseArray = true) {
 		$authData = $this->getSession()->getAuthData();
 		return $p_bUseArray ? $authData : (object) $authData;
+	}
+
+	/**
+	 * Get the current logged in users authentication data
+	 *
+	 * @todo make a setUser() function to perform setAuthData()
+	 * @return object
+	 */
+	protected function getUser() {
+		return (object) $this->getSession()->getAuthData();
 	}
 
 	/**
