@@ -154,6 +154,9 @@ class PPI_Request {
 		if (isset($env['get']) && (is_array($env['get']) || $env['get'] instanceof PPI_Request_Url)) {
 			$this->_get = $env['get'];
 		} else {
+			if(isset($env['uri'])) {
+				$this->setUri($env['uri']);
+			}
 			$this->_get = new PPI_Request_Url($this->getUri());
 		}
 
@@ -178,7 +181,7 @@ class PPI_Request {
 	 * @param mixed $default
 	 * @return mixed
 	 */
-	function get($key, $default = null) {
+	function get($key = null, $default = null) {
 
 		if($key === null) {
 			return $this->_get->all();
@@ -383,9 +386,19 @@ class PPI_Request {
 	function getUri() {
 
 		if (null === $this->_uri) {
-			$this->_uri = PPI_Helper::getRegistry()->get('PPI::Request_URI', $this->_server['REQUEST_URI']);
+			$this->_uri = $this->_server['REQUEST_URI'];
 		}
 		return $this->_uri;
+	}
+
+	/**
+	 * Set the uri
+	 *
+	 * @param string $uri
+	 * @return void
+	 */
+	function setUri($uri) {
+		$this->_uri = $uri;
 	}
 
 	/**

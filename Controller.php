@@ -17,10 +17,12 @@ class PPI_Controller {
     /**
      * The constructor
      */
-	function __construct () {
-		$this->_view     = PPI_Helper::getView();
-		$this->_request  = PPI_Helper::getRequest();
-		$this->_response = PPI_Helper::getResponse();
+	function __construct () {}
+
+	function systemInit($app) {
+		$this->_request  = $app->getEnv('request');
+		$this->_response = $app->getEnv('response');
+		$this->_view     = $app->getEnv('view');
 	}
 
 	/**
@@ -265,6 +267,10 @@ class PPI_Controller {
 		return PPI_Helper::getConfig();
 	}
 
+	public function setApp($app) {
+		$this->_app = $app;
+	}
+
 	/**
 	 * Returns the session object
      *
@@ -350,7 +356,7 @@ class PPI_Controller {
 	 * @param mixed $p_mDefault The default value returned if the key doesn't exist
 	 * @return mixed
 	 */
-	protected function get($p_sVar, $p_mDefault = null) {
+	protected function get($p_sVar = null, $p_mDefault = null) {
 		return $this->_request->get($p_sVar, $p_mDefault);
 	}
 

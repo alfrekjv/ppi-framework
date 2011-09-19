@@ -1,39 +1,127 @@
 <?php
 /**
- * @version   1.0
+ * The Dispatch Class For The PPI Framework.
+ *
  * @author    Paul Dragoonis <dragoonis@php.net>
  * @license   http://opensource.org/licenses/mit-license.php MIT
- * @copyright Digiflex Development
  * @package   Dispatch
  * @link      www.ppiframework.com
  */
 class PPI_Dispatch {
 
-	/**
-	 * The actual helper doing the dispatching
-	 *
-	 * @var object that implements PPI_Dispatch_Interface
-	 */
-	protected $_helper = null;
-
-	protected $_render404 = false;
 
 	/**
-	 * The router doing the routing
+	 * The uri to dispatch against
 	 *
-	 * @var PPI_Router
+	 * @var null|string
 	 */
-	protected $_router = null;
+	protected $_uri = null;
+
+	/**
+	 * The string name of the controller
+	 *
+	 * @var null|string
+	 */
+	protected $_controllerName = null;
+
+	/**
+	 * The chosen method name for our controller, defaulted to index
+	 *
+	 * @var string
+	 */
+	protected $_methodName = 'index';
+
+	/**
+	 * The controller class that has been instantiated
+	 *
+	 * @var null|object
+	 */
+	protected $_controllerObject = null;
+
+	/**
+	 * If we have ran the init function yet or not
+	 *
+	 * @var bool
+	 */
+	protected $_ranInit = false;
 
 	/**
 	 * Identify and store the appropriate Controller and Methods to dispatch at a later time when calling dispatch()
 	 *
 	 */
-	function __construct(PPI_Dispatch_Interface $p_oDispatch) {
-		$this->_helper = $p_oDispatch;
-		if($this->_helper->init() === false) {
-			$this->_render404 = true;
+	function __construct(array $options = array()) {
+
+		if(isset($options['uri'])) {
+			$this->_uri = $options['uri'];
 		}
+
+	}
+
+	/**
+	 * Set the URI
+	 *
+	 * @param string $uri
+	 * @return void
+	 */
+	function setUri($uri) {
+		$this->_uri = $uri;
+	}
+
+	/**
+	 * Get the URI
+	 *
+	 * @return string
+	 */
+	function getUri() {
+		return $this->_uri;
+	}
+
+	function init() {
+
+		// Check where we are
+		$urls                = $this->getURISegments();
+		$controllerName      = ucfirst($urls[0]);
+		$className           = 'APP_Controller_' . $controllerName; // eg: APP_Controller_User
+		$this->setControllerName($className);
+		// Setup the method we wish to call.
+		$method = isset($urls[1]) ? $urls[1] : $this->_methodName;
+		$this->setMethodName($method);
+		$this->_ranInit = true;
+	}
+
+	/**
+	 * Check if the chosen controller is a valid controller
+	 *
+	 * @return bool
+	 */
+	function check() {
+
+		// Init check
+		$this->init();
+
+		// Lets check if our controller exists
+		$className = $this->getControllerName();
+		$exists = class_exists($className);
+		if(!$exists) {
+			return false;
+		}
+
+		// Check for an abstract class
+		$reflectionClass = new ReflectionClass($className);
+		if($reflectionClass->isAbstract() === true) {
+			return false;
+		}
+
+		$controller = new $className();
+
+		// Check that it's callable
+		if(!is_callable(array($controller, $this->getMethodName()))) {
+			return false;
+		}
+
+		// Set the instantiated controller
+		$this->setController($controller);
+		return true;
 	}
 
 	/**
@@ -42,11 +130,21 @@ class PPI_Dispatch {
 	 * @return void
 	 */
 	function dispatch() {
-		if($this->_render404) {
-			PPI_Exception::show_404('Invalid dispatch process');
-			return;
-		}
-		$this->_helper->dispatch();
+
+		$controller = $this->getController();
+		$method = $this->getMethodName();
+		$controller->$method();
+
+	}
+
+	/**
+	 * Get the segments from the URI
+	 *
+	 * @return array
+	 */
+	function getURISegments() {
+		$uri = $this->_uri;
+		return explode('/', trim($uri, '/'));
 	}
 
 	/**
@@ -55,7 +153,17 @@ class PPI_Dispatch {
 	 * @return string
 	 */
 	function getControllerName() {
-		return $this->_helper->getControllerName();
+		return $this->_controllerName;
+	}
+
+	/**
+	 * Set the controller name
+	 *
+	 * @param string $name The Controller Name
+	 * @return void
+	 */
+	function setControllerName($name) {
+		$this->_controllerName = $name;
 	}
 
 	/**
@@ -64,6 +172,36 @@ class PPI_Dispatch {
 	 * @return string
 	 */
 	function getMethodName() {
-		return $this->_helper->getMethod();
+		return $this->_methodName;
 	}
+
+	/**
+	 * Set the method name
+	 *
+	 * @param string $name
+	 * @return void
+	 */
+	function setMethodName($name) {
+		$this->_methodName = $name;
+	}
+
+	/**
+	 * Set the controller object
+	 *
+	 * @param object $controller
+	 * @return void
+	 */
+	function setController($controller) {
+		$this->_controllerObject = $controller;
+	}
+
+	/**
+	 * Get the controller object
+	 *
+	 * @return null|object
+	 */
+	function getController() {
+		return $this->_controllerObject;
+	}
+
 }
