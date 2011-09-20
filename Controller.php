@@ -14,15 +14,49 @@ class PPI_Controller {
      */
 	protected $_view = null;
 
+	protected $_request = null;
+
+	protected $_response = null;
+
+	/**
+	 * The app object
+	 *
+	 * @var null
+	 */
+	protected $_app = null;
+
     /**
      * The constructor
      */
 	function __construct () {}
 
+	/**
+	 * The base init function that the framework uses to initialise the controller
+	 *
+	 * @param string $app
+	 * @return void
+	 */
 	function systemInit($app) {
+		$this->_app      = $app;
 		$this->_request  = $app->getEnv('request');
 		$this->_response = $app->getEnv('response');
 		$this->_view     = $app->getEnv('view');
+	}
+
+	function getApp() {
+		return $this->_app;
+	}
+
+	function getRequest() {
+		return $this->_request;
+	}
+
+	function getView() {
+		return $this->_view;
+	}
+
+	function getResponse() {
+		return $this->_response;
 	}
 
 	/**

@@ -130,9 +130,12 @@ class PPI_Dispatch {
 	 * @return void
 	 */
 	function dispatch() {
-
 		$controller = $this->getController();
 		$method = $this->getMethodName();
+
+		if(method_exists($controller, 'preDispatch')) {
+			$controller->preDispatch();
+		}
 		$controller->$method();
 
 	}
