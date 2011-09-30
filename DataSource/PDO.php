@@ -24,7 +24,8 @@ class PPI_DataSource_PDO {
 		$connParamsMap = array(
 			'database' => 'dbname',
 			'username' => 'user',
-			'hostname' => 'host'
+			'hostname' => 'host',
+			'password' => 'pass'
 		);
 
 		foreach($connParamsMap as $key => $param) {
@@ -36,6 +37,7 @@ class PPI_DataSource_PDO {
 
 		$config['driver'] = $config['type'];
 		unset($config['type']);
+
 		return \Doctrine\DBAL\DriverManager::getConnection($config, $connObject);
 
 	}
