@@ -185,8 +185,9 @@ EOT;
 		echo $header.$html.$footer;
 	} else {
 
-		$oView = new PPI_Controller();
-		$oView->render('framework/error', array(
+		$controller = new PPI_Controller();
+		$controller->systemInit($oApp);
+		$controller->render('framework/error', array(
 			'message' => $p_aError['message'],
 			'errorPageType' => '404'
 		));
