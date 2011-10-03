@@ -65,7 +65,7 @@ class PPI_Form_Tag_Select extends PPI_Form_Tag {
 		$html = '';
 		foreach($this->_options as $key => $val) {
 			$selected = '';
-			if($this->_selected !== null && $this->_selected == $key) {
+			if($this->_selected !== null && $this->_selected == $val) {
 				$selected = 'selected="selected" ';
 			}
 			$html .= sprintf(self::optionsFormat, $selected, $val, $key);
