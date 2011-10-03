@@ -25,6 +25,13 @@ class PPI_Dispatch {
 	protected $_controllerName = null;
 
 	/**
+	 * The Controller's Class Name
+	 *
+	 * @var null|string
+	 */
+	protected $_controllerClassName = null;
+
+	/**
 	 * The chosen method name for our controller, defaulted to index
 	 *
 	 * @var string
@@ -82,7 +89,9 @@ class PPI_Dispatch {
 		$urls                = $this->getURISegments();
 		$controllerName      = ucfirst($urls[0]);
 		$className           = 'APP_Controller_' . $controllerName; // eg: APP_Controller_User
-		$this->setControllerName($className);
+		$this->setControllerName(strtolower($controllerName));
+		$this->setControllerClassName($className);
+
 		// Setup the method we wish to call.
 		$method = isset($urls[1]) ? $urls[1] : $this->_methodName;
 		$this->setMethodName($method);
@@ -100,7 +109,7 @@ class PPI_Dispatch {
 		$this->init();
 
 		// Lets check if our controller exists
-		$className = $this->getControllerName();
+		$className = $this->getControllerClassName();
 		$exists = class_exists($className);
 		if(!$exists) {
 			return false;
@@ -130,9 +139,9 @@ class PPI_Dispatch {
 	 * @return void
 	 */
 	function dispatch() {
+
 		$controller = $this->getController();
 		$method = $this->getMethodName();
-
 		if(method_exists($controller, 'preDispatch')) {
 			$controller->preDispatch();
 		}
@@ -160,6 +169,15 @@ class PPI_Dispatch {
 	}
 
 	/**
+	 * Get the controller's class name
+	 *
+	 * @return null|string
+	 */
+	function getControllerClassName() {
+		return $this->_controllerClassName;
+	}
+
+	/**
 	 * Set the controller name
 	 *
 	 * @param string $name The Controller Name
@@ -167,6 +185,16 @@ class PPI_Dispatch {
 	 */
 	function setControllerName($name) {
 		$this->_controllerName = $name;
+	}
+
+	/**
+	 * Set the controller's Class NAme
+	 *
+	 * @param string $name
+	 * @return void
+	 */
+	function setControllerClassName($name) {
+		$this->_controllerClassName = $name;
 	}
 
 	/**
