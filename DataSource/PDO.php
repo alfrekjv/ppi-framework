@@ -25,7 +25,7 @@ class PPI_DataSource_PDO {
 			'database' => 'dbname',
 			'username' => 'user',
 			'hostname' => 'host',
-			'password' => 'pass'
+			'pass'     => 'password'
 		);
 
 		foreach($connParamsMap as $key => $param) {
