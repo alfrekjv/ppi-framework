@@ -159,6 +159,10 @@ class PPI_App {
 			));
 		}
 
+		if(isset($this->_envOptions['ds']) && $this->_envOptions['ds'] && file_exists(CONFIGPATH . 'connections.php')) {
+			include_once(CONFIGPATH . 'connections.php');
+		}
+
 		$this->_config = $this->_config->getConfig();
 
 		// -- Set the config into the registry for quick read/write --
