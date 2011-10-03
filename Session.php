@@ -56,8 +56,10 @@ class PPI_Session {
 			}
 			$this->_array[$this->_defaults['sessionNamespace']] = $p_aOptions['data'];
 		} else {
-			session_name($this->_defaults['sessionNamespace']);
-			session_start();
+			if(session_id() == '') {
+				session_name($this->_defaults['sessionNamespace']);
+				session_start();
+			}
 			if (!isset($_SESSION[$this->_defaults['sessionNamespace']])) {
 				$_SESSION[$this->_defaults['sessionNamespace']] = array();
 			}
