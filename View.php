@@ -258,7 +258,7 @@ class PPI_View {
 			$oDispatch = PPI_Helper::getDispatcher();
 			$request = array(
 				'controller' => $oDispatch->getControllerName(),
-				'method' => $oDispatch->getMethodName()
+				'method'     => $oDispatch->getMethodName()
 			);
 		}
 		/*
