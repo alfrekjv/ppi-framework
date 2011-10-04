@@ -113,4 +113,28 @@ class PPI_Cache {
     	return $this->_handler->remove($key);
     }
 
+	/**
+	 * Get the current registered handler
+	 *
+	 * @return null|PPI_Cache_Interface
+	 */
+	function getHandler() {
+		return $this->_handler;
+	}
+
+	/**
+	 * Set the current handler, we check enabled() and exec init() on the handler too to make sure it's ready to go.
+	 *
+	 * @throws PPI_Exception
+	 * @param PPI_Cache_Interface $handler
+	 * @return void
+	 */
+	function setHandler(PPI_Cache_Interface $handler) {
+		$this->_handler = $handler;
+        if($this->_handler->enabled() === false) {
+            throw new PPI_Exception('The cache driver ' . get_class($handler) . ' is currently disabled.');
+        }
+		$this->_handler->init();
+	}
+
 }
