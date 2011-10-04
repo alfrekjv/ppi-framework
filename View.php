@@ -210,20 +210,24 @@ class PPI_View {
 				throw new PPI_Exception('Unable to use cache handler, it does not implement PPI_Cache_Interface');
 			}
 
-			$cacheName = ifset($options['cachePrefix'], '')
-					   . 'ppi-cached-template-'
-			           . str_replace(array('\\', '/'), '-', $template);
-
-			if($options['cacheHandler']->exists($cacheName)) {
-				return $options['cacheHandler']->get($cacheName);
+			// If our template exists in the cache
+			if($this->cachedRenderExists($template, $options)) {
+				return $this->getCachedRender($template, $options);
 			}
+
+			// Generate our cachename
+			$cacheName = $this->createCachedRenderKey($template, $options);
 
 			ob_start();
 			$oTpl->render($template);
-			$content = ob_get_clean();
+			$content = ob_get_contents();
+			ob_end_clean();
+
 			$ttl = isset($options['cacheTTL']) ? $options['cacheTTL'] : 0;
 			$options['cacheHandler']->set($cacheName, $content, $ttl);
+
 			return $content;
+
 		}
 
 		// Lets render baby !!
@@ -362,4 +366,46 @@ class PPI_View {
 		$sRenderer = empty($this->_config->layout->renderer) ? $this->_defaultRenderer : $this->_config->layout->renderer;
 		return $this->getRenderer($sRenderer)->templateExists($templateName);
 	}
+
+	/**
+	 * Check if a cachedRender item exists in the cache
+	 *
+	 * @param string $template
+	 * @param array $options
+	 * @return boolean
+	 */
+	public function cachedRenderExists($template, array $options = array()) {
+		$cacheName = $this->createCachedRenderKey($template, $options);
+		return $options['cacheHandler']->exists($cacheName);
+	}
+
+	/**
+	 * Get the cached render file from the cache
+	 *
+	 * @param $template
+	 * @param array $options
+	 * @return string
+	 */
+	public function getCachedRender($template, array $options = array()) {
+
+		$cacheName = $this->createCachedRenderKey($template, $options);
+		if($options['cacheHandler']->exists($cacheName)) {
+			return $options['cacheHandler']->get($cacheName);
+		}
+		return '';
+
+	}
+
+	/**
+	 * Create a cache key for our cached template
+	 *
+	 * @param string $template
+	 * @param array $options
+	 * @return string
+	 */
+	public function createCachedRenderKey($template, array $options = array()) {
+			return (isset($options['cachePrefix']) ? $options['cachePrefix'] : '') . 'ppi_cached_template_'
+				. str_replace(array('\\', '/'), '_', $template);
+	}
+
 }
