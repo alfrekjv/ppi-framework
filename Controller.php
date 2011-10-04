@@ -538,4 +538,37 @@ class PPI_Controller {
 
 		return $this->_view->render($template, $params, $options);
 	}
+
+	/**
+	 * Create a cache key for our cached template
+	 *
+	 * @param string $template
+	 * @param array $options
+	 * @return string
+	 */
+	public function createCachedRenderKey($template, array $options = array()) {
+		return $this->_view->createCachedRenderKey($template, $options);
+	}
+
+	/**
+	 * Check if a cachedRender item exists in the cache
+	 *
+	 * @param string $template
+	 * @param array $options
+	 * @return boolean
+	 */
+	public function cachedRenderExists($template, array $options = array()) {
+		return $this->_view->cachedRenderExists($template, $options);
+	}
+
+	/**
+	 * Get the cached render contents from the cache
+	 *
+	 * @param string $template
+	 * @param array $options
+	 * @return string
+	 */
+	public function getCachedRender($template, array $options = array()) {
+		return $this->_view->getCachedRender($template, $options);
+	}
 }
