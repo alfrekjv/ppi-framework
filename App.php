@@ -276,8 +276,10 @@ class PPI_App {
 		$this->_envOptions['view'] = new PPI_View();
 		$this->_envOptions['response'] = new PPI_Response();
 
-		$controller->systemInit($this);
-		$this->_envOptions['dispatcher']->setController($controller);
+		if($controller !== null) {
+			$controller->systemInit($this);
+			$this->_envOptions['dispatcher']->setController($controller);
+		}
 		$this->_envOptions['dispatcher']->dispatch();
 	}
 
