@@ -12,7 +12,7 @@ class PPI_DataSource {
 
 	function __construct() {}
 
-	function factory($key) {
+	static function factory($key) {
 
 		// Connection Caching
 		if(isset(self::$_connections[$key])) {
