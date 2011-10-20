@@ -112,6 +112,9 @@ abstract class PPI_Model {
 
 			// Look for db.default in the config, if it doesn't exist revert back to db.*
 		} else {
+			if(!isset($oConfig->db)) {
+				throw new PPI_Exception('Unable to find any db information in the config');
+			}
 			$dbInfo = isset($oConfig->db->default) ? $oConfig->db->default->toArray() : $oConfig->db->toArray();
 		}
 
@@ -393,7 +396,7 @@ abstract class PPI_Model {
 		} catch (PDOException $e) {
 			throw new PPI_Exception($e->getMessage());
 		}
-		return $this->rHandler->lastInsertId();
+		return (int) $this->rHandler->lastInsertId();
 	}
 
 	/**
