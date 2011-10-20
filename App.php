@@ -159,8 +159,10 @@ class PPI_App {
 			));
 		}
 
+		// So are we auto-loading datasource
 		if(isset($this->_envOptions['ds']) && $this->_envOptions['ds'] && file_exists(CONFIGPATH . 'connections.php')) {
-			include_once(CONFIGPATH . 'connections.php');
+			$ds = PPI_DataSource::create($this->loadDSConnections());
+			PPI_Registry::set('DataSource', $ds);
 		}
 
 		$this->_config = $this->_config->getConfig();
@@ -281,6 +283,19 @@ class PPI_App {
 			$this->_envOptions['dispatcher']->setController($controller);
 		}
 		$this->_envOptions['dispatcher']->dispatch();
+	}
+	
+	/**
+	 * Load the connections from $path
+	 * 
+	 * @param string $path
+	 * @return array
+	 */
+	function loadDSConnections($path) {
+
+		$path = $this->getEnv('dsConnectionsPath', CONFIGPATH . 'connections.php');
+		include_once($path);
+		return isset($connections) ? $connections : array();
 	}
 
 	/**
