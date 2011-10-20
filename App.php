@@ -288,10 +288,9 @@ class PPI_App {
 	/**
 	 * Load the connections from $path
 	 * 
-	 * @param string $path
 	 * @return array
 	 */
-	function loadDSConnections($path) {
+	function loadDSConnections() {
 
 		$path = $this->getEnv('dsConnectionsPath', CONFIGPATH . 'connections.php');
 		include_once($path);
