@@ -19,6 +19,32 @@ class PPI_Helper {
 		}
 		return array_map(array($this, 'arrayTrim'), $input);
 	}
+	
+	/**
+	 * Get the data source component from the registry
+	 * 
+	 * @static
+	 * @throws PPI_Exception
+	 * @return PPI_DataSource
+	 */
+	static function getDataSource() {
+
+		if(!PPI_Registry::exists('DataSource')) {
+			throw new PPI_Exception('Trying to load DataSource. The component has not been loaded yet.');
+		}
+		return PPI_Registry::get('DataSource');
+	}
+	
+	/**
+	 * Get the specified connection by $key from the data source component
+	 * 
+	 * @static
+	 * @param string $key
+	 * @return object
+	 */
+	static function getDataSourceConnection($key) {
+		return self::getDataSource()->getConnection($key);
+	}
 
 	/**
 	 * Get the config object
