@@ -571,4 +571,18 @@ class PPI_Controller {
 	public function getCachedRender($template, array $options = array()) {
 		return $this->_view->getCachedRender($template, $options);
 	}
+	
+	/**
+	 * Get the data source object from the registry
+	 * 
+	 * @throws PPI_Exception
+	 * @return mixed
+	 */
+	public function getDataSource() {
+
+		if(!PPI_Registry::exists('DataSource')) {
+			throw new PPI_Exception('Attempting to obtain the datasource. It has not been loaded yet.');
+		}
+		return PPI_Registry::get('DataSource');
+	}
 }
