@@ -1,7 +1,6 @@
 <?php
 
-class PPI_Request_Session extends PPI_Request_Abstract
-{
+class PPI_Request_Session extends PPI_Request_Abstract {
 	/**
 	 * Constructor
 	 *
@@ -33,7 +32,7 @@ class PPI_Request_Session extends PPI_Request_Abstract
 	 */
 	public function offsetSet($offset, $value) {
 		if ($value === null) {
-			return $this->offsetUnset($offset);
+			$this->offsetUnset($offset);
 		}
 
 		$this->_array[$offset] = $value;
