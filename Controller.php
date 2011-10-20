@@ -573,16 +573,21 @@ class PPI_Controller {
 	}
 	
 	/**
-	 * Get the data source object from the registry
+	 * Get the data source connection
 	 * 
 	 * @throws PPI_Exception
 	 * @return mixed
 	 */
+	public function getDataSourceConnection($key) {
+		return PPI_Helper::getDataSourceConnection($key);
+	}
+	
+	/**
+	 * Get the data source component
+	 * 
+	 * @return PPI_DataSource
+	 */
 	public function getDataSource() {
-
-		if(!PPI_Registry::exists('DataSource')) {
-			throw new PPI_Exception('Attempting to obtain the datasource. It has not been loaded yet.');
-		}
-		return PPI_Registry::get('DataSource');
+		return PPI_Helper::getDataSource();
 	}
 }
