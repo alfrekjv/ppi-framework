@@ -35,7 +35,16 @@ class PPI_DataSource_ActiveRecord {
 	 * @return void
 	 */
 	function find($val) {
-		// SELECT * from [table] WHERE [primary] = $val
+
+		if($this->_table === null || $this->_primary) {
+			throw new PPI_Exception('You need to specify a table name and primary key');
+		}
+		$stmt = $this->_conn->prepare("SELECT * FROM {$this->_table} WHERE {$this->_primary} = :val");
+		$stmt->execute(array('val' => $val));
+		$row = $stmt->fetch();
+		$stmt->closeCursor();
+		$this->_conn->close();
+		return $row;
 	}
 	
 	/**
