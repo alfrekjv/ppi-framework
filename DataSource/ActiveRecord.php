@@ -54,7 +54,6 @@ class PPI_DataSource_ActiveRecord {
 	 * @return void
 	 */
 	function fetchAll($identifier) {
-		// SELECT * from [table]
 	}
 
 }
